@@ -1,0 +1,100 @@
+{% extends "blog/base.html" %}
+{% load staticfiles %}
+
+{% block meta %}
+{% for post in posts %}
+<meta property="og:url" content="{{ base_url }}blog" />
+<meta property="og:title" content="Blog Article List" />
+<meta property="og:description" content="Browse ryan dingle articles" />
+<meta property="og:image" content="{{ base_url }}{% static 'blog/img/home-bg.jpg' %}" />
+<meta property="og:type" content="Blog Articles">
+<meta property="og:site_name" content="Ryan Dingle">
+<meta property="og:locale" content="en_US">
+<meta property="fb:app_id" content="259321127540805">
+{% endfor %}
+{% endblock %}
+
+{% block title %} Blog | Ryan Dingle {% endblock %}
+{% block content %}
+
+<header class="intro-header" style="background-image: url({% static 'blog/img/home-bg.jpg' %})">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading">
+                    <h3>Welcome to my blog</h3>
+                    <span class="subheading">The simplest things are the most beautiful</span>
+                    <hr class="small">
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            {% if post_list %}
+            {% for posts in post_list %}
+            <div class="post-preview">
+                <a href="{{ posts.get_absolute_url }}">
+                    <h2 class="post-title">
+                        {{ posts.title }}
+                    </h2>
+                    <h3 class="post-subtitle">
+                        {{ posts.body|safe|truncatechars:300  }}
+                    </h3>
+                </a>
+                <p class="post-meta">
+                    Categories: 
+                    {% for category in posts.categories.all %} 
+                        <a href="{{category.get_absolute_url}}">{{ category.name }},</a>
+                    {% endfor %}
+                    <br>
+                    Tags: 
+                    {% for tag in posts.tags.all %} 
+                        <a href="{{tag.get_absolute_url}}">{{ tag.name }},</a> 
+                    {% endfor %}
+                    <br>
+                </p>
+                <p class="post-meta">Posted by <a href="/">{{ posts.creator }}</a> on {{ posts.pub_date|date:"F d, Y" }}</p>
+            </div>
+            <hr>
+            {% endfor %}
+            {% else %}
+            <div class="post-preview">
+                <a href="post.html">
+                    <h2 class="post-title">
+                        You have no post yet master.
+                    </h2>
+                    <h3 class="post-subtitle">
+                        Add some interesting about you or in the world master.
+                    </h3>
+                </a>
+            </div>
+            <hr>
+            {% endif %}
+            <!-- Pager -->
+            <ul class="pager">
+                <li class="previous">
+                    {% if post_list.has_previous %}
+                        <a href="?page={{ post_list.previous_page_number }}"> &larr; Previous Posts</a>
+                    {% endif %}
+                </li>
+                <li>
+                    <span class="current">
+                    Page {{ post_list.number }} of {{ post_list.paginator.num_pages }}
+                    </span>
+                </li>
+                <li class="next">
+                    {% if post_list.has_next %}
+                        <a href="?page={{ post_list.next_page_number }}">Older Posts &rarr;</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<hr>
+{% endblock %}

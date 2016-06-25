@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{% load staticfiles %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Ryan Dingle - portfolio</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Codeply">
+    <meta property="og:title" content="Ryan Dingle - Portfolio" />
+    <meta property="og:site_name" content="Ryan Dingle"/>
+    <meta property="og:description" content="Portfolio List of Ryan Dingle" />
+ 
+    <link href="{% static 'portfolio/images/ico.png' %}" rel="shortcut icon">
+    <!-- Fonts -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
+
+    <!-- Styles -->
+    <link href="{% static 'portfolio/css/app.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" />
+    <link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+</head>
+<body id="app-layout">  
+{% include 'portfolio/includes/header2.html' %}
+<section id="three" class="no-padding" style="padding-top: 5%">
+    <div class="container-fluid">
+        <div class="row no-gutter">
+        	{% if project %}
+        	{% for projects in project %}
+        	 <div class="col-lg-4 col-sm-6">
+                <a href="javascript:void(0)" data-url="{{ base_url }}{{ projects.get_absolute_url }}" class="gallery-box get">
+                    <img src="/media/{{ projects.image }}" class="img-responsive" alt="{{projects.title}}">
+                    <div class="gallery-box-caption">
+                        <div class="gallery-box-content">
+                            <div>
+                                <i class="icon-lg ion-ios-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        	{% endfor %}
+        	{% else %}
+            <h3>Set up your projects now @admin site</h3>
+        	{% endif %}
+        </div>
+    </div>
+    <!-- Pager -->
+    <nav class="container">
+    <ul class="pager">
+        <li class="previous">
+            {% if project.has_previous %}
+                <a href="?page={{ project.previous_page_number }}" style="background: transparent;"> &larr; Previous Posts</a>
+            {% endif %}
+        </li>
+        <li>
+            <span class="current" style="background: transparent;">
+            Page {{ project.number }} of {{ project.paginator.num_pages }}
+            </span>
+        </li>
+        <li class="next">
+            {% if project.has_next %}
+                <a href="?page={{ project.next_page_number }}" style="background: transparent;">Older Posts &rarr;</a>
+            {% endif %}
+        </li>
+    </ul>
+    </nav>
+</section>
+
+
+<div id="projectModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-body">
+            
+        </div>
+        <p>
+            <br/>
+            <button class="btn btn-primary btn-lg center-block" data-dismiss="modal" aria-hidden="true">Close <i class="ion-android-close"></i></button>
+        </p>
+    </div>
+    </div>
+</div>
+
+<div id="ok-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-body">
+            <p class="text-center response"></p>
+            <br/>
+            <button class="btn btn-primary btn-lg center-block" data-dismiss="modal" aria-hidden="true">Close <i class="ion-android-close"></i></button>
+        </div>
+    </div>
+    </div>
+</div>
+
+{% include 'portfolio/includes/footer.html' %}
+<!-- JavaScripts -->
+<script src="{% static 'portfolio/js/app.js' %}"></script>
+<script src="{% static 'portfolio/js/action.js' %}"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+<!--end scripts -->
+</body>
+</html>

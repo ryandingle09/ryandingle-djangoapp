@@ -1,0 +1,31 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<body>
+<div style="background-color:  #eee">
+	<article>
+		<header style="padding: 30px">
+			<h1 style="margin: 0px auto">
+            <a style="text-align: center;" class="navbar-brand page-scroll" href="{{base_url}}"><img class="ico-but" src="{{base_url}}{% static 'portfolio/images/ico.png' %}"> Ryan Dingle</a>
+            </h1>
+		</header>
+		<section style="padding: 30px">
+			<p>
+				From : <b>{{ fullname }}</b>
+				<br>
+				Phone : <b>{{ phone }}</b>
+				<br>
+				Email : <b>{{ email }}</b>
+				<br>
+			</p>
+			<p>
+				{{ message }}
+			</p>
+		</section>
+		<footer style="padding: 30px;">
+			<p><a style="text-align: center;" href="/">Ryan Dingle</a> ©{% now 'Y' %}</a></p>
+		</footer>
+	</article>
+</div>
+</body>
+</html>

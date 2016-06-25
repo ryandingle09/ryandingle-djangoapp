@@ -1,0 +1,15 @@
+{% for p in project %}
+<img src="{{base_url}}/media/{{p.image}}" id="galleryImage" class="img-responsive">
+<hr>
+<blockquote>
+  <small>Title : </small>
+  <h3><code>{{p.title}}</code></h3>
+
+  <small>Description : </small>
+  <h3><code>{{p.description}}</code></h3>
+
+  <small>Url : </small>
+  <h3><code><a target="_blank" href="{{ p.website }}">{{ p.website }}</a></code></h3>
+</blockquote>
+<hr>
+{% endfor %}

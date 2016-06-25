@@ -1,0 +1,195 @@
+{% extends "portfolio/base.html" %}
+{% load staticfiles %}
+{% block title %} Ryan Dingle {% endblock %}
+{% block content %}
+<!--content -->
+<header id="first">
+    <div class="header-content">
+        <div class="inner">
+        	{% if front %}
+        	{% for fronts in front %}
+        	<img class="me-pic" src="media/{{ fronts.image }}">
+            <h1 class="cursive large">{{ fronts.bio }}</h1>
+            <h4>{{ fronts.signature }}</h4>
+        	{% endfor %}
+        	{% else %}
+            <img class="me-pic" src="{% static 'portfolio/images/me.jpg' %}">
+            <h1 class="cursive large">I code, design and more..</h1>
+            <h4>Ryan Dingle</h4>
+            {% endif %}
+            <hr>
+        </div>
+    </div>
+    <video autoplay="" loop="" class="fillWidth fadeIn wow collapse in" data-wow-delay="0.5s" poster="" id="video-background">
+        <source src="" type="video/mp4">Your browser does not support the video tag. I suggest you upgrade your browser.
+    </video>
+</header>
+<section class="bg-primary" id="one">
+    <div class="container">
+        <div class="row">
+            {% if about %}
+            {% for abouts in about %}
+            <div class="col-md-3">
+                <img class="img-responsive me-pic2" src="/media/{{ abouts.image }}">
+                <div style="marign-top: 3%; background: transparent;">{{ abouts.address|safe }}</div>
+
+                {% if resume %}
+                <div class="text-center">
+                    {% for resumes in resume %}
+                    <a href="/media/{{ resumes.resume }}" target="_blank" class="btn btn-info btn-lg">View my CV</a>
+                    {% endfor %}
+                {% else %}
+                    <a href="alert('No Cv Found !')" class="btn btn-info">View my CV</a>
+                {% endif %}
+                </div>
+            </div>
+            <div class="col-md-9">
+                <blockquote>
+                    {{ abouts.about_content|safe }}
+                </blockquote>
+            </div>
+            {% endfor %}
+            {% else %}
+            <h1>Update your about section @admin panel</h1>
+            {% endif %}
+        </div>
+    </div>
+</section>
+<section id="two">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="margin-top-0 text-primary">Skill Set Packages</h2>
+                <hr class="primary">
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+        	{% if skill %}
+        	{% for skills in skill %}
+            <div class="col-lg-4 col-md-4 text-center">
+                <div class="feature">
+        			<img style="width: 150px; margin: 0px auto; height: 150px;" class="img-responsive wow fadeIn" data-wow-delay=".3s" src="/media/{{ skills.image }}" />
+                    <h3>{{ skills.name }}</h3>
+                </div>
+            </div>
+        	{% endfor %}
+        	{% else %}
+        	<img class="img-responsive" src="" />
+            <div class="col-lg-4 col-md-4 text-center">
+                <div class="feature">
+                    <i class="icon-lg ion-android-laptop wow fadeIn" data-wow-delay=".3s"></i>
+                    <h3>Responsive</h3>
+                    <p class="text-muted">Your site looks good everywhere</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 text-center">
+                <div class="feature">
+                    <i class="icon-lg ion-social-sass wow fadeInUp" data-wow-delay=".3s"></i>
+                    <h3>Customizable</h3>
+                    <p class="text-muted">Easy to theme and customize with SASS</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 text-center">
+                <div class="feature">
+                    <i class="icon-lg ion-ios-star-outline wow fadeIn" data-wow-delay=".3s"></i>
+                    <h3>Consistent</h3>
+                    <p class="text-muted">A mature, well-tested, stable codebase</p>
+                </div>
+            </div>
+        	{% endif %}
+        </div>
+    </div>
+</section>
+<section id="three" class="no-padding">
+    <div class="container-fluid">
+        <div class="row no-gutter">
+        	{% if project_list %}
+        	{% for projects in project_list %}
+        	 <div class="col-lg-4 col-sm-6">
+                <a href="javascript:void(0)" data-url="{{ base_url }}{{ projects.get_absolute_url }}" class="gallery-box get">
+                    <img src="/media/{{ projects.image }}" class="img-responsive" alt="{{projects.title}}">
+                    <div class="gallery-box-caption">
+                        <div class="gallery-box-content">
+                            <div>
+                                <i class="icon-lg ion-ios-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        	{% endfor %}
+        	{% else %}
+            <h3>Set up your projects now @admin site</h3>
+        	{% endif %}
+        </div>
+        <div class="text-center">
+            <h4><a href="/portfolio/"> View all <i class="fa fa-chevron-right"></i></a></h4>
+        </div>
+    </div>
+</section>
+
+<section id="last">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 text-center">
+                <h2 class="margin-top-0 wow fadeIn">Get in Touch</h2>
+                <hr class="primary">
+                <p>I love feedback. Fill out the form below and i'll get back to you as soon as possible.</p>
+            </div>
+            <div class="col-lg-10 col-lg-offset-1 text-center">
+                <form class="add row" data-identity="contact" data-token="{% csrf_token %}" method="post">
+                	{% csrf_token %}
+                    <div class="col-md-4">
+                        <label></label>
+                        <input type="text" name="fullname" class="form-control" placeholder="Name">
+                    </div>
+                    <div class="col-md-4">
+                        <label></label>
+                        <input type="text" name="email" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="col-md-4">
+                        <label></label>
+                        <input type="text" name="phone" class="form-control" placeholder="Phone">
+                    </div>
+                    <div class="col-md-12">
+                        <label></label>
+                        <textarea name="message" class="form-control" rows="9" placeholder="Your message here.."></textarea>
+                    </div>
+                    <div class="col-md-4 col-md-offset-4">
+                        <label></label>
+                        <button type="submit" data-toggle="modal" class="btn btn-primary btn-block btn-lg">Send <i class="ion-android-arrow-forward"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="projectModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-body">
+            
+        </div>
+        <p>
+            <br/>
+            <button class="btn btn-primary btn-lg center-block" data-dismiss="modal" aria-hidden="true">Close <i class="ion-android-close"></i></button>
+        </p>
+    </div>
+    </div>
+</div>
+
+<div id="ok-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-body">
+            <p class="text-center response"></p>
+            <br/>
+            <button class="btn btn-primary btn-lg center-block" data-dismiss="modal" aria-hidden="true">Close <i class="ion-android-close"></i></button>
+        </div>
+    </div>
+    </div>
+</div>
+{% endblock %}
